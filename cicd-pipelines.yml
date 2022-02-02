@@ -1,0 +1,18 @@
+pipelines:
+  default:
+    - step:
+        name: linter and local tests (back)
+        image: moonshotinternet/ci-terraform
+        script:
+          - cd back
+          - flake8
+          - pip install --upgrade -r requirements.txt
+          - pytest
+    - step:
+        name: linter and build (front)
+        image: moonshotinternet/ci-front
+        script:
+          - cd front/ride-app
+          - npm install
+          - npm run lint
+          - npm run build

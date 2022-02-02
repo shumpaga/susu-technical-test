@@ -1,0 +1,37 @@
+[
+  {
+    "id": 0,
+    "type": "standard",
+    "available": true
+  },
+  {
+    "id": 1,
+    "type": "premium",
+    "available": true
+  },
+  {
+    "id": 2,
+    "type": "standard",
+    "available": true
+  },
+  {
+    "id": 3,
+    "type": "eco",
+    "available": true
+  },
+  {
+    "id": 4,
+    "type": "standard",
+    "available": false
+  },
+  {
+    "id": 5,
+    "type": "premium",
+    "available": true
+  },
+  {
+    "id": 6,
+    "type": "eco",
+    "available": false
+  }
+]
