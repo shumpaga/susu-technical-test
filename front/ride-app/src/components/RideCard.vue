@@ -2,6 +2,9 @@
     <div class="card" :class="{disabled: !ride.available}">
         <font-awesome-icon :icon="iconType" size="2x"/>
         <p class="name">{{ ride.id }}</p>
+        <p v-if="ride.available">
+            <button @click="initReservation({rideId: ride.id})">Reserve</button>
+        </p>
     </div>
 </template>
 <style scoped>
@@ -23,6 +26,7 @@ import { Vue} from "vue-property-decorator";
 import { faTaxi, faRocket, faShuttleVan, faQuestion, IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import { Ride } from "@/models/Ride.model";
 import { PropType } from "vue";
+import { mapActions } from "vuex";
 
 export default Vue.extend({
     props: {
@@ -37,6 +41,9 @@ export default Vue.extend({
                 default: return faQuestion;
             }
         }
+    },
+    methods: {
+        ...mapActions("rides", ["initReservation"])
     }
 });
 </script>

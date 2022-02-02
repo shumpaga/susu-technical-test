@@ -5,6 +5,8 @@ import { RootState } from ".";
 
 export class State {
   public rides: Ride[] = []
+  public selectedRide: number | null = null
+  public suggestedPrice: string | null = null
 }
 
 type Context = ActionContext<State, RootState>;
@@ -12,6 +14,19 @@ type Context = ActionContext<State, RootState>;
 const mutations =  {
   setRides(state: State, payload: Ride[]): void {
     state.rides = payload;
+  },
+
+  selectRide(state: State, payload: { rideId: number }): void {
+    state.selectedRide = payload.rideId;
+  },
+
+  setSuggestedPrice(state: State, payload: { price: number }): void {
+    state.suggestedPrice = payload.price.toFixed(2);
+  },
+
+  resetSelection(state: State): void {
+    state.suggestedPrice = null;
+    state.selectedRide = null;
   }
 }
 
@@ -41,6 +56,26 @@ const actions = {
       }
     }
     context.commit('setRides', response)
+  },
+
+  async initReservation(context: Context, payload: { rideId: number }): Promise<void> {
+    context.commit('selectRide', payload)
+  },
+
+  async getQuotation(context: Context, payload: { time: string, duration: string }): Promise<void> {
+    if (!context.state.selectedRide) {
+      return;
+    }
+    const client = new RideService(process.env.VUE_APP_API_URL);
+    const response = await client.getQuotation(
+      context.state.selectedRide,
+      payload,
+    );
+    context.commit('setSuggestedPrice', response)
+  },
+
+  resetSelection(context: Context): void {
+    context.commit('resetSelection')
   }
 }
 

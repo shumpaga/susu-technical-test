@@ -7,6 +7,7 @@
     <section class="cards">
       <RideCard class='card' v-for="ride in rides" :ride="ride" :key="ride.id"/>
     </section>
+    <modal v-if="selectedRide"></modal>
   </div>
 </template>
 <style scoped>
@@ -26,13 +27,15 @@
 import { mapActions, mapGetters, mapState } from "vuex"
 import { Vue } from "vue-property-decorator";
 import RideCard from "@/components/RideCard.vue";
+import Modal from "@/components/Modal.vue";
 
 export default Vue.extend({
   components: {
     RideCard,
+    Modal,
   },
   computed: {
-    ...mapState("rides", ["rides"]),
+    ...mapState("rides", ["rides", "selectedRide"]),
     ...mapGetters("rides", ["availableRides"])
   },
   methods: {

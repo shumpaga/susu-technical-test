@@ -43,4 +43,16 @@ export class RideService {
     return body;
   }
 
+  async getQuotation(rideID: number, info: { time: string, duration: string }): Promise<number> {
+    const url = `${this.endpoint}/rides/${rideID}/quote`;
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({time: info.time, duration: parseInt(info.duration)})
+    });
+    const body = await response.json();
+    return body;
+  }
 }
